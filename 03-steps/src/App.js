@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const messages = ["Easy", "Medium", "Advanced"];
+const messages = ["Easy", "Medium", "Hard"];
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -11,11 +11,11 @@ export default function App() {
     setStep(step - 1);
   }
   function handleNext() {
-    if (step >= 2) return;
+    if (step === 3) return;
     // setStep(step + 1);
     // setStep(step + 1);
     setStep((s) => s + 1);
-    setStep((s) => s + 1);
+    // setStep((s) => s + 1);
   }
 
   return (
@@ -27,31 +27,71 @@ export default function App() {
       {isOpen && (
         <div className="steps">
           <div className="numbers">
-            <div className={step >= 1 ? "active" : ""}>1</div>
+            <Step step={step} number={1}>
+              1
+            </Step>
+            <Step step={step} number={2}>
+              2
+            </Step>
+            <Step step={step} number={3}>
+              3
+            </Step>
+            {/* <div className={step >= 1 ? "active" : ""}>1</div>
             <div className={step >= 2 ? "active" : ""}>2</div>
-            <div className={step >= 3 ? "active" : ""}>3</div>
+            <div className={step >= 3 ? "active" : ""}>3</div> */}
           </div>
 
-          <p className="message">
+          <Message>
             Step {step}: {messages[step - 1]}
-          </p>
+          </Message>
+          {/* <p className="message">
+            Step {step}: {messages[step - 1]}
+          </p> */}
 
           <div className="buttons">
-            <button
+            <Button
               onClick={handlePrev}
               style={{ backgroundColor: "#7950f2", color: "#fff" }}
             >
-              Previous
-            </button>
-            <button
+              👈🏻 Previous
+            </Button>
+            <Button
               onClick={handleNext}
               style={{ backgroundColor: "#7950f2", color: "#fff" }}
             >
-              Next
-            </button>
+              Next 👉🏻
+            </Button>
+            {/* <button
+                onClick={handlePrev}
+                style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              >
+                Previous
+              </button> */}
+            {/* <button
+                onClick={handleNext}
+                style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              >
+                Next
+              </button> */}
           </div>
         </div>
       )}
     </>
   );
+}
+
+function Message({ children }) {
+  return <p className="message">{children}</p>;
+}
+
+function Button({ onClick, children, style }) {
+  return (
+    <button onClick={onClick} style={style}>
+      {children}
+    </button>
+  );
+}
+
+function Step({ step, number, children }) {
+  return <div className={step >= number ? "active" : ""}>{children}</div>;
 }
